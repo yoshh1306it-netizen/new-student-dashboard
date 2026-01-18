@@ -1,7 +1,7 @@
 // ▼▼▼ ここを自分のリポジトリ名に変える！ ▼▼▼
 const GH_CONFIG = {
-    owner: "souta-624",
-    repo: "school",   // ← ここを shcool か school か確認して修正
+    owner: "yoshh1306it-netizen",
+    repo: "new-student-dashboard",   // ← ここを shcool か school か確認して修正
     path: "data.json"
 };
 
@@ -178,4 +178,5 @@ class App {
 }
 
 const app = new App();
+
 window.onload = () => app.init();
