@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div>
+                <h1>School Dashboard</h1>
+                <p>今日も頑張りましょう！</p>
+            </div>
+        </div>
+        <div class="header-controls">
+            <button id="userSettingsBtn" class="btn-secondary">
+                <i class="fa-solid fa-user-group"></i> <span id="headerClassName">21HR</span>
+            </button>
+            <button id="adminLoginBtn" class="btn-secondary">
+                <i class="fa-solid fa-lock"></i> 管理者
+            </button>
+        </div>
+    </header>
+
+    <main id="mainContainer">
+        <div id="view-dashboard" class="view-section active">
+            <div class="grid-container">
+                <div class="card card-clock">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-white-op"><i class="fa-regular fa-clock"></i></div> 現在時刻
+                    </div>
+                    <div class="clock-display" id="clockTime">00:00:00</div>
+                    <div class="date-display" id="clockDate">----年--月--日</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-green"><i class="fa-solid fa-book-open"></i></div> 次の授業
+                    </div>
+                    <div class="large-content" id="nextClassDisplay">読み込み中...</div>
+                </div>
+
+                <div class="card card-test-gradient">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-white-op"><i class="fa-solid fa-bullseye"></i></div> 次のテストまで
+                    </div>
+                    <div class="large-content" id="testCountdownDisplay" style="color:white;">予定なし</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-red"><i class="fa-solid fa-stopwatch"></i></div> ポモドーロ
+                    </div>
+                    <div class="pomodoro-display">
+                        <div class="timer-time" id="pomoTime">25:00</div>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="pomoProgress"></div>
+                        </div>
+                        <div class="timer-controls">
+                            <button id="pomoStartBtn" class="btn-timer-main">開始</button>
+                            <button id="pomoResetBtn" class="btn-timer-sub"><i class="fa-solid fa-rotate-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-blue"><i class="fa-regular fa-calendar"></i></div> 今日の時間割
+                    </div>
+                    <div id="scheduleList" class="list-container">
+                        <p style="color:#aaa; font-size:0.9rem;">予定はありません</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-admin-login" class="view-section auth-bg">
+            <div class="auth-card">
+                <div class="title-icon-main"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3>管理者認証</h3>
+                <input type="password" id="adminPinInput" class="form-control" placeholder="パスワード (1234)">
+                <button id="adminLoginSubmit" class="btn-save-full">ログイン</button>
+                <p onclick="app.navigate('dashboard')" style="margin-top:15px; cursor:pointer; color:#95a5a6;">戻る</p>
+            </div>
+        </div>
+
+        <div id="view-admin" class="view-section">
+            <div class="back-nav" onclick="app.navigate('dashboard')">← ホームに戻る</div>
+            <h2>管理者設定</h2>
+            
+            <div class="card">
+                <h3><i class="fa-solid fa-key"></i> GitHub接続設定</h3>
+                <input type="password" id="ghToken" class="form-control" placeholder="ここにトークン (ghp_...) を入力">
+                <p class="field-desc">設定を保存するために必要です。</p>
+            </div>
+
+            <div class="card" style="margin-top:15px;">
+                <h3><i class="fa-solid fa-pen-to-square"></i> テスト設定</h3>
+                <label>テスト名</label>
+                <input type="text" id="adminTestName" class="form-control" placeholder="例：2学期期末テスト">
+                <label>日付</label>
+                <input type="date" id="adminTestDate" class="form-control">
+            </div>
+
+            <button id="saveAdminDataBtn" class="btn-save-full" style="margin-top:20px; background:#27ae60;">
+                <i class="fa-solid fa-cloud-arrow-up"></i> 全設定を保存して反映
+            </button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
