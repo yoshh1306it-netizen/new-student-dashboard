@@ -1,7 +1,7 @@
 // ▼▼▼ あなたのリポジトリ名に修正してください！ ▼▼▼
 const GH_CONFIG = {
-    owner: "souta-624",
-    repo: "school",   // ← 確認！
+    owner: "yoshh1306it-netizen",
+    repo: "new-student-dashboard",   // ← 確認！
     path: "data.json"
 };
 
@@ -348,3 +348,4 @@ class App {
 
 const app = new App();
 window.onload = () => app.init();
+
