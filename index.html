@@ -105,7 +105,6 @@
                     </div>
                     <div class="calendar-wrapper">
                         <iframe id="googleCalendarFrame" src="" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
-                        <p id="calendarMsg" style="text-align:center; color:#aaa; font-size:0.8rem; display:none;">設定画面からカレンダーIDを設定してください</p>
                     </div>
                 </div>
             </div>
@@ -114,30 +113,30 @@
         <div id="view-user-settings" class="view-section">
             <div class="back-nav" onclick="app.navigate('dashboard')">← ホームに戻る</div>
             <h2>個人設定</h2>
-            
             <div class="card">
                 <h3><i class="fa-solid fa-users"></i> 自分のクラス</h3>
-                <p class="field-desc">時間割を表示するクラスを選択してください。</p>
-                <select id="userClassSelect" class="form-control">
-                    </select>
+                <select id="userClassSelect" class="form-control"></select>
             </div>
-
             <div class="card" style="margin-top:15px;">
                 <h3><i class="fa-brands fa-google"></i> GoogleカレンダーID</h3>
-                <p class="field-desc">表示したいカレンダーIDを入力 (空欄なら日本の祝日)。<br>※学校の公開カレンダーIDなどを入力してください。</p>
                 <input type="text" id="userCalendarId" class="form-control" placeholder="example@group.calendar.google.com">
             </div>
-
-            <button id="saveUserSettingsBtn" class="btn-save-full" style="margin-top:20px;">設定を保存して戻る</button>
+            <button id="saveUserSettingsBtn" class="btn-save-full" style="margin-top:20px;">保存して戻る</button>
         </div>
 
         <div id="view-admin-login" class="view-section auth-bg">
             <div class="auth-card">
-                <div class="title-icon-main"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="auth-icon-top"><i class="fa-solid fa-graduation-cap"></i></div>
                 <h3>管理者認証</h3>
-                <input type="password" id="adminPinInput" class="form-control" placeholder="パスワード (1234)">
-                <button id="adminLoginSubmit" class="btn-save-full">ログイン</button>
-                <p onclick="app.navigate('dashboard')" style="margin-top:15px; cursor:pointer; color:#95a5a6;">戻る</p>
+                <p style="font-size:0.8rem; color:#7f8c8d; margin-bottom:20px;">管理者パスワードを入力してください</p>
+                
+                <div style="text-align:left; font-size:0.85rem; font-weight:bold; margin-bottom:5px;">パスワード</div>
+                <input type="password" id="adminPinInput" class="form-control" placeholder="••••">
+                
+                <button id="adminLoginSubmit" class="btn-save-full" style="margin-top:10px;">
+                    <i class="fa-solid fa-lock"></i> ログイン
+                </button>
+                <p onclick="app.navigate('dashboard')" style="margin-top:20px; cursor:pointer; color:#95a5a6; font-size:0.9rem;">キャンセル</p>
             </div>
         </div>
 
@@ -146,23 +145,31 @@
             <h2>管理者設定</h2>
             
             <div class="card">
-                <h3>GitHub接続設定</h3>
-                <input type="password" id="ghToken" class="form-control" placeholder="ghp_...">
-                <p class="field-desc">GitHubトークンを入力してください。</p>
+                <h3><i class="fa-solid fa-key"></i> 接続設定</h3>
+                <input type="password" id="ghToken" class="form-control" placeholder="GitHub Token (ghp_...)">
             </div>
 
             <div class="card" style="margin-top:15px;">
-                <h3>定期テスト設定</h3>
-                <input type="text" id="adminTestName" class="form-control" placeholder="テスト名 (例: 中間テスト)">
+                <h3><i class="fa-solid fa-pen-to-square"></i> 時間割編集</h3>
+                <p class="field-desc">編集したいクラスを選択してください</p>
+                <select id="adminTargetClass" class="form-control" style="background:#f0f8ff; border-color:#5e5ce6; font-weight:bold;">
+                    </select>
+
+                <div id="adminScheduleEditor" style="margin-top:15px;">
+                    </div>
+            </div>
+
+            <div class="card" style="margin-top:15px;">
+                <h3><i class="fa-solid fa-bullseye"></i> 次回のテスト設定</h3>
+                <input type="text" id="adminTestName" class="form-control" placeholder="テスト名">
                 <input type="date" id="adminTestDate" class="form-control">
             </div>
 
             <button id="saveAdminDataBtn" class="btn-save-full" style="margin-top:20px; background:#27ae60;">
-                <i class="fa-solid fa-cloud-arrow-up"></i> 設定をGitHubに保存
+                <i class="fa-solid fa-cloud-arrow-up"></i> 設定を保存
             </button>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
