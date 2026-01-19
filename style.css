@@ -5,6 +5,7 @@
     --green: #1dd1a1;
     --blue: #54a0ff;
     --orange: #ffa502;
+    --purple: #a55eea;
     --text-main: #2d3436;
     --radius: 20px;
 }
@@ -13,12 +14,12 @@ body {
     background: var(--bg-color);
     font-family: 'Noto Sans JP', sans-serif;
     margin: 0; color: var(--text-main);
-    padding-bottom: 50px;
+    padding-bottom: 80px;
 }
 
 .app-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 15px 20px; background: white;
+    padding: 15px 20px; background: white; border-bottom: 1px solid #eee;
 }
 .logo-area { display: flex; align-items: center; gap: 10px; }
 .logo-icon {
@@ -26,22 +27,28 @@ body {
     width: 40px; height: 40px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
 }
-.logo-area h1 { font-size: 1.2rem; margin: 0; }
-.logo-area p { font-size: 0.8rem; color: #7f8c8d; margin: 0; }
+.header-controls { display: flex; gap: 10px; }
 
+/* ユーザー情報バー */
+.user-info-bar { padding: 10px 20px; font-size: 0.9rem; color: #636e72; text-align: right; }
+.badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+
+/* グリッドレイアウト (レスポンシブ) */
 .grid-container {
     display: grid; gap: 15px; padding: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+@media (max-width: 600px) {
+    .grid-container { grid-template-columns: 1fr; }
 }
 
 .card {
     background: white; border-radius: var(--radius);
-    padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    position: relative;
 }
 .card-clock { background: var(--primary); color: white; }
-.card-test-gradient {
-    background: linear-gradient(135deg, #ff7675, #e17055); color: white;
-}
+.card-test-gradient { background: linear-gradient(135deg, #ff7675, #e17055); color: white; }
 
 /* アイコンボックス */
 .card-header-sm { display: flex; align-items: center; gap: 10px; font-weight: bold; margin-bottom: 15px; }
@@ -52,8 +59,27 @@ body {
 .bg-red { background: var(--red); }
 .bg-blue { background: var(--blue); }
 .bg-green { background: var(--green); }
+.bg-orange { background: var(--orange); }
+.bg-purple { background: var(--purple); }
 .bg-white-op { background: rgba(255,255,255,0.2); }
 
+/* ToDoリスト */
+.todo-progress-area { margin-bottom: 15px; }
+.todo-progress-text { font-size: 0.8rem; color: #636e72; margin-bottom: 5px; text-align: right; }
+.progress-container-sm { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+.progress-bar-sm { height: 100%; background: var(--orange); width: 0%; transition: 0.3s; }
+.todo-input-area { display: flex; gap: 5px; margin-bottom: 10px; }
+.todo-input-area input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 8px; }
+.todo-input-area button { background: var(--primary); color: white; border: none; width: 35px; border-radius: 8px; cursor: pointer; }
+.todo-list { list-style: none; padding: 0; margin: 0; }
+.todo-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f1f1; }
+.todo-item.done span { text-decoration: line-through; color: #b2bec3; }
+.btn-del-todo { margin-left: auto; color: #ff7675; border: none; background: none; cursor: pointer; }
+
+/* カレンダー */
+.calendar-wrapper { border-radius: 10px; overflow: hidden; }
+
+/* テキスト系 */
 .clock-display { font-size: 2.5rem; font-weight: bold; }
 .large-content { font-size: 1.2rem; color: #7f8c8d; }
 .card-test-gradient .large-content { color: white; opacity: 0.95; font-weight: bold; }
@@ -67,24 +93,13 @@ body {
 .btn-timer-main { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 .btn-timer-sub { background: #eee; border: none; width: 40px; border-radius: 10px; cursor: pointer; }
 
-/* 管理者ログイン */
-.auth-bg {
-    position: fixed; inset: 0; background: #2d3436;
-    display: flex; align-items: center; justify-content: center; z-index: 1000;
-}
-.auth-card { background: white; padding: 30px; border-radius: var(--radius); text-align: center; width: 85%; max-width: 320px; }
-.title-icon-main {
-    width: 60px; height: 60px; background: var(--primary); color: white;
-    border-radius: 15px; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-}
-.form-control {
-    width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box;
-}
-.btn-save-full {
-    width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;
-}
+/* ボタン・フォーム */
+.btn-secondary { background: #dfe6e9; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; color: #2d3436; }
+.btn-save-full { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+.form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
 .field-desc { font-size: 0.8rem; color: #7f8c8d; margin-top: -10px; margin-bottom: 15px; }
 
+/* 画面切り替え */
 .view-section { display: none; }
 .view-section.active { display: block; animation: fadeIn 0.3s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
