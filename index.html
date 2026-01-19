@@ -23,48 +23,64 @@
                 <i class="fa-solid fa-gear"></i> 設定
             </button>
             <button id="adminLoginBtn" class="btn-secondary">
-                <i class="fa-solid fa-lock"></i>
+                <i class="fa-solid fa-lock"></i> 管理者
             </button>
         </div>
     </header>
 
     <main id="mainContainer">
-        
         <div id="view-dashboard" class="view-section active">
+            <div class="user-info-bar">
+                表示中のクラス: <span id="displayClassName" class="badge">読み込み中...</span>
+            </div>
+
             <div class="grid-container">
-                
                 <div class="card card-clock">
                     <div class="card-header-sm">
                         <div class="icon-box bg-white-op"><i class="fa-regular fa-clock"></i></div> 現在時刻
                     </div>
                     <div class="clock-display" id="clockTime">00:00:00</div>
-                    <div class="date-display" id="clockDate">----/--/--</div>
+                    <div class="date-display" id="clockDate">----年--月--日</div>
                 </div>
 
                 <div class="card">
                     <div class="card-header-sm">
-                        <div class="icon-box bg-green"><i class="fa-solid fa-book-open"></i></div> 現在・次の授業
+                        <div class="icon-box bg-green"><i class="fa-solid fa-book-open"></i></div> 次の授業
                     </div>
-                    <div class="large-content" id="statusDisplay">
-                        <span style="font-size:0.9rem; color:#aaa;">読み込み中...</span>
-                    </div>
+                    <div class="large-content" id="nextClassDisplay">読み込み中...</div>
                 </div>
 
                 <div class="card">
                     <div class="card-header-sm">
-                        <div class="icon-box bg-blue"><i class="fa-regular fa-calendar"></i></div> <span id="scheduleTitle">今日の時間割</span>
+                        <div class="icon-box bg-blue"><i class="fa-regular fa-calendar"></i></div> 今日の時間割
                     </div>
                     <div id="scheduleList" class="list-container">
+                        <p style="color:#aaa; font-size:0.9rem;">読み込み中...</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-sm">
+                        <div class="icon-box bg-orange"><i class="fa-solid fa-check-to-slot"></i></div> ToDoリスト
+                    </div>
+                    <div class="todo-progress-area">
+                        <div class="todo-progress-text"><span id="todoCount">0/0</span> 完了</div>
+                        <div class="progress-container-sm">
+                            <div class="progress-bar-sm" id="todoProgressBar"></div>
                         </div>
+                    </div>
+                    <div class="todo-input-area">
+                        <input type="text" id="newTodoInput" placeholder="タスクを追加...">
+                        <button id="addTodoBtn"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <ul id="todoList" class="todo-list"></ul>
                 </div>
 
                 <div class="card card-test-gradient">
                     <div class="card-header-sm">
-                        <div class="icon-box bg-white-op"><i class="fa-solid fa-bullseye"></i></div> 定期テスト
+                        <div class="icon-box bg-white-op"><i class="fa-solid fa-bullseye"></i></div> 次のテストまで
                     </div>
-                    <div class="large-content" id="testCountdownDisplay" style="color:white;">
-                        未設定
-                    </div>
+                    <div class="large-content" id="testCountdownDisplay" style="color:white;">確認中...</div>
                 </div>
 
                 <div class="card">
@@ -83,37 +99,36 @@
                     </div>
                 </div>
 
-                <div class="card" style="min-height:300px;">
+                <div class="card" style="grid-column: 1 / -1;">
                     <div class="card-header-sm">
-                        <div class="icon-box bg-purple"><i class="fa-brands fa-google"></i></div> Googleカレンダー
+                        <div class="icon-box bg-purple"><i class="fa-regular fa-calendar-days"></i></div> 行事予定 (Google Calendar)
                     </div>
-                    <div id="calendarContainer" class="calendar-wrapper">
-                        <p style="text-align:center; color:#aaa; margin-top:50px;">
-                            設定画面から<br>埋め込みURLを設定してください
-                        </p>
+                    <div class="calendar-wrapper">
+                        <iframe id="googleCalendarFrame" src="" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+                        <p id="calendarMsg" style="text-align:center; color:#aaa; font-size:0.8rem; display:none;">設定画面からカレンダーIDを設定してください</p>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div id="view-user-settings" class="view-section">
-            <div class="back-nav" onclick="app.navigate('dashboard')">← 戻る</div>
+            <div class="back-nav" onclick="app.navigate('dashboard')">← ホームに戻る</div>
             <h2>個人設定</h2>
             
             <div class="card">
-                <h3>クラス設定</h3>
-                <p class="field-desc">自分のクラスを入力してください（例: 21HR）</p>
-                <input type="text" id="userClassInput" class="form-control" placeholder="21HR">
+                <h3><i class="fa-solid fa-users"></i> 自分のクラス</h3>
+                <p class="field-desc">時間割を表示するクラスを選択してください。</p>
+                <select id="userClassSelect" class="form-control">
+                    </select>
             </div>
 
             <div class="card" style="margin-top:15px;">
-                <h3>Googleカレンダー設定</h3>
-                <p class="field-desc">Googleカレンダーの「埋め込みコード」にあるsrcのURLだけを貼ってください。</p>
-                <input type="text" id="userCalendarInput" class="form-control" placeholder="https://calendar.google.com/...">
+                <h3><i class="fa-brands fa-google"></i> GoogleカレンダーID</h3>
+                <p class="field-desc">表示したいカレンダーIDを入力 (空欄なら日本の祝日)。<br>※学校の公開カレンダーIDなどを入力してください。</p>
+                <input type="text" id="userCalendarId" class="form-control" placeholder="example@group.calendar.google.com">
             </div>
 
-            <button id="saveUserSettingsBtn" class="btn-save-full" style="margin-top:20px;">設定を保存</button>
+            <button id="saveUserSettingsBtn" class="btn-save-full" style="margin-top:20px;">設定を保存して戻る</button>
         </div>
 
         <div id="view-admin-login" class="view-section auth-bg">
@@ -122,31 +137,32 @@
                 <h3>管理者認証</h3>
                 <input type="password" id="adminPinInput" class="form-control" placeholder="パスワード (1234)">
                 <button id="adminLoginSubmit" class="btn-save-full">ログイン</button>
-                <p onclick="app.navigate('dashboard')" style="margin-top:15px; cursor:pointer; color:#95a5a6;">キャンセル</p>
+                <p onclick="app.navigate('dashboard')" style="margin-top:15px; cursor:pointer; color:#95a5a6;">戻る</p>
             </div>
         </div>
 
         <div id="view-admin" class="view-section">
-            <div class="back-nav" onclick="app.navigate('dashboard')">← 戻る</div>
-            <h2>管理者設定 (全体反映)</h2>
+            <div class="back-nav" onclick="app.navigate('dashboard')">← ホームに戻る</div>
+            <h2>管理者設定</h2>
             
             <div class="card">
-                <h3>GitHub接続</h3>
+                <h3>GitHub接続設定</h3>
                 <input type="password" id="ghToken" class="form-control" placeholder="ghp_...">
+                <p class="field-desc">GitHubトークンを入力してください。</p>
             </div>
 
             <div class="card" style="margin-top:15px;">
-                <h3>テスト設定</h3>
-                <input type="text" id="adminTestName" class="form-control" placeholder="テスト名">
+                <h3>定期テスト設定</h3>
+                <input type="text" id="adminTestName" class="form-control" placeholder="テスト名 (例: 中間テスト)">
                 <input type="date" id="adminTestDate" class="form-control">
             </div>
 
-            <button id="saveAdminDataBtn" class="btn-save-full" style="background:#27ae60; margin-top:20px;">
-                <i class="fa-solid fa-cloud-arrow-up"></i> 保存して反映
+            <button id="saveAdminDataBtn" class="btn-save-full" style="margin-top:20px; background:#27ae60;">
+                <i class="fa-solid fa-cloud-arrow-up"></i> 設定をGitHubに保存
             </button>
         </div>
-
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
