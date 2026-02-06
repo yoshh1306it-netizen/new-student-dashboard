@@ -165,8 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('todos', JSON.stringify(todos));
         renderTodos(todos);
     }
+    
+    // 🔥 修正箇所: ここでエラーが出ていたので構造を変更
     function renderTodos(todos) {
-        todoList.innerHTML = '';
+        const todoListEl = document.getElementById('todoList');
+        todoListEl.innerHTML = '';
+        
         let doneCount = 0;
         todos.forEach((todo, index) => {
             const li = document.createElement('li');
@@ -175,12 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span onclick="toggleTodo(${index})">${todo.text}</span>
                 <button class="nav-btn" onclick="deleteTodo(${index})"><i class="fa-solid fa-trash"></i></button>
             `;
-            todoList.appendChild(li);
+            todoListEl.appendChild(li);
         });
+        
         const pct = todos.length ? (doneCount / todos.length) * 100 : 0;
         todoProgress.style.width = pct + '%';
         todoCount.textContent = `${doneCount}/${todos.length} 完了`;
     }
+    
     window.toggleTodo = (i) => { const t = JSON.parse(localStorage.getItem('todos')); t[i].done = !t[i].done; saveTodos(t); };
     window.deleteTodo = (i) => { const t = JSON.parse(localStorage.getItem('todos')); t.splice(i, 1); saveTodos(t); };
     addTodoBtn.addEventListener('click', () => {
